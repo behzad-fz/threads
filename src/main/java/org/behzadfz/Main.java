@@ -1,9 +1,6 @@
 package org.behzadfz;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.*;
 
 import org.behzadfz.concurrency.Invoker;
 import org.behzadfz.concurrency.Task;
@@ -27,6 +24,7 @@ public class Main {
 
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.submit(new Task());
+        executorService.shutdown();
 
         System.out.println("Terminate!");
     }
