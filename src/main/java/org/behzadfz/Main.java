@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 
 import org.behzadfz.concurrency.Invoker;
+import org.behzadfz.concurrency.Task;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,6 +26,7 @@ public class Main {
 
 
         ExecutorService executorService = Executors.newFixedThreadPool(10);
+        executorService.submit(new Task());
 
         System.out.println("Terminate!");
     }
