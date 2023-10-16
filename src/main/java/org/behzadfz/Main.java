@@ -8,6 +8,7 @@ import org.behzadfz.concurrency.Task;
 public class Main {
     public static void main(String[] args) {
 
+        // I. Executor
         Executor executor = new Invoker();
 
         try {
@@ -21,17 +22,20 @@ public class Main {
 
         System.out.println(Thread.currentThread());
 
-
+        // II. ExecutorService
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.submit(new Task());
         executorService.shutdown();
 
+        // III. ScheduledExecutorService
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
         Future<String> future = scheduledExecutorService.schedule(() -> {
             System.out.println(Thread.currentThread()+" from scheduledExecutorService");
             return Thread.currentThread()+" from scheduledExecutorService";
         },5,TimeUnit.SECONDS);
+
+        System.out.println("status? => "+ future.isDone());
 
         ScheduledFuture<?> scheduledFuture = scheduledExecutorService.schedule(() -> {
             System.out.println(Thread.currentThread() + "from scheduled future!");
@@ -47,8 +51,28 @@ public class Main {
 
         anotherScheduledExecutorService.scheduleWithFixedDelay(() -> {
             System.out.println("from with fixed delay");
+            System.out.println("status? => "+ future.isDone());
+
         }, 1, 10, TimeUnit.SECONDS);
 
+
+        //IV. Future
+        ExecutorService executorServiceIV = Executors.newFixedThreadPool(10);
+
+        Future<String> futureIV = executorServiceIV.submit(() -> {
+
+            Thread.sleep(10000l);
+            return "from the future!!";
+        });
+
+        if (futureIV.isDone() && !futureIV.isCancelled()) {
+            try {
+                String str = futureIV.get(10, TimeUnit.SECONDS);
+                System.out.println(str);
+            } catch (InterruptedException | ExecutionException | TimeoutException exception) {
+                exception.printStackTrace();
+            }
+        }
 
         System.out.println("Terminate!");
     }
