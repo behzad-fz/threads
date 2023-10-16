@@ -26,6 +26,19 @@ public class Main {
         executorService.submit(new Task());
         executorService.shutdown();
 
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+        Future<String> future = scheduledExecutorService.schedule(() -> {
+            System.out.println(Thread.currentThread()+" from scheduledExecutorService");
+            return Thread.currentThread()+" from scheduledExecutorService";
+        },5,TimeUnit.SECONDS);
+
+        ScheduledFuture<?> scheduledFuture = scheduledExecutorService.schedule(() -> {
+            System.out.println(Thread.currentThread() + "from scheduled future!");
+        }, 8, TimeUnit.SECONDS);
+
+        scheduledExecutorService.shutdown();
+
         System.out.println("Terminate!");
     }
 }
