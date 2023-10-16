@@ -39,6 +39,17 @@ public class Main {
 
         scheduledExecutorService.shutdown();
 
+        ScheduledExecutorService anotherScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+        anotherScheduledExecutorService.scheduleAtFixedRate(() -> {
+            System.out.println("from at fixed rate");
+        }, 1, 10, TimeUnit.SECONDS);
+
+        anotherScheduledExecutorService.scheduleWithFixedDelay(() -> {
+            System.out.println("from with fixed delay");
+        }, 1, 10, TimeUnit.SECONDS);
+
+
         System.out.println("Terminate!");
     }
 }
