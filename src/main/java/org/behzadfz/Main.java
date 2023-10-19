@@ -7,6 +7,7 @@ import org.behzadfz.concurrency.Invoker;
 import org.behzadfz.concurrency.Task;
 
 public class Main {
+    static Semaphore semaphore = new Semaphore(2);
     public static void main(String[] args) {
 
         // I. Executor
@@ -90,6 +91,19 @@ public class Main {
             t2.start();
             t3.start();
         }
+
+        System.out.println("Available Permit: " + semaphore.availablePermits());
+        System.out.println("Number of threads waiting to acquire: " + semaphore.getQueueLength());
+        semaphore.tryAcquire();
+
+        if (semaphore.tryAcquire()) {
+            try {
+                System.out.println("In Critical Section");
+            } finally {
+                semaphore.release();
+            }
+        }
+
         System.out.println("Terminate!");
     }
 }
