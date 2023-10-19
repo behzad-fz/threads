@@ -2,6 +2,7 @@ package org.behzadfz;
 
 import java.util.concurrent.*;
 
+import org.behzadfz.concurrency.CyclicBarrierTask;
 import org.behzadfz.concurrency.Invoker;
 import org.behzadfz.concurrency.Task;
 
@@ -74,6 +75,21 @@ public class Main {
             }
         }
 
+        // V. Cyclic Barrier
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(3, () -> {
+
+            System.out.println("All previous tasks are completed!");
+        });
+
+        Thread t1 = new Thread(new CyclicBarrierTask(cyclicBarrier), "T1");
+        Thread t2 = new Thread(new CyclicBarrierTask(cyclicBarrier), "T2");
+        Thread t3 = new Thread(new CyclicBarrierTask(cyclicBarrier), "T3");
+
+        if (!cyclicBarrier.isBroken()) {
+            t1.start();
+            t2.start();
+            t3.start();
+        }
         System.out.println("Terminate!");
     }
 }
