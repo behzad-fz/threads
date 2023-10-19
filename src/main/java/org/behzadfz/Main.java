@@ -92,6 +92,8 @@ public class Main {
             t3.start();
         }
 
+
+        // VI
         System.out.println("Available Permit: " + semaphore.availablePermits());
         System.out.println("Number of threads waiting to acquire: " + semaphore.getQueueLength());
         semaphore.tryAcquire();
