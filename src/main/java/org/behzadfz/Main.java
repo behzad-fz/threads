@@ -2,6 +2,7 @@ package org.behzadfz;
 
 import java.util.concurrent.*;
 
+import org.behzadfz.concurrency.CustomThreadFactory;
 import org.behzadfz.concurrency.CyclicBarrierTask;
 import org.behzadfz.concurrency.Invoker;
 import org.behzadfz.concurrency.Task;
@@ -104,6 +105,13 @@ public class Main {
             } finally {
                 semaphore.release();
             }
+        }
+
+        // VII
+        CustomThreadFactory threadFactory = new CustomThreadFactory("CustomThreadFactory");
+        for (int i = 0; i < 10; i++) {
+            Thread t = threadFactory.newThread(new Task());
+            t.start();
         }
 
         System.out.println("Terminate!");
