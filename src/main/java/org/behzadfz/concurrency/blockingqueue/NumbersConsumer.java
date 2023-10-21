@@ -14,6 +14,13 @@ public class NumbersConsumer implements Runnable {
         this.poisonPill = poisonPill;
     }
 
+    private List versions;
+
+    @SuppressWarnings({"unchecked"}) // better way is to change List above to List<String> to not get the warning at the first place
+    public void addVersion(String version) {
+        versions.add(version);
+    }
+
 
     public void run() {
 
