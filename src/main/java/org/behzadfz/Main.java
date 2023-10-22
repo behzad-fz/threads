@@ -9,13 +9,14 @@ import org.behzadfz.concurrency.Invoker;
 import org.behzadfz.concurrency.Task;
 import org.behzadfz.concurrency.blockingqueue.NumbersConsumer;
 import org.behzadfz.concurrency.blockingqueue.NumbersProducer;
-import org.behzadfz.concurrency.blockingqueue.SomeClassToSerilize;
+import org.behzadfz.advanced.SomeClassToSerilize;
 
 public class Main {
     static Semaphore semaphore = new Semaphore(2);
     public static void main(String[] args) {
 
         SomeClassToSerilize someClass = new SomeClassToSerilize(1, "the name");
+        someClass.setSecret(12);
 
         String filename = "/Users/behzad_fz/Java/SpringBoot/threads/test-serialize.txt";
         FileOutputStream fileOutputStream;
