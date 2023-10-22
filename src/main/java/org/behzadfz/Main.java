@@ -21,6 +21,7 @@ public class Main {
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
 
+        // Write to file
         try {
             fileOutputStream = new FileOutputStream(filename);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -31,6 +32,24 @@ public class Main {
             System.out.println("Serilized!!");
         } catch (IOException e) {
             System.out.println("IO Error!!!!");
+        }
+
+        // Read from file
+        FileInputStream fileInput;
+        ObjectInputStream objectInput;
+
+        try {
+            fileInput = new FileInputStream(filename);
+            objectInput = new ObjectInputStream(fileInput);
+
+            SomeClassToSerilize sc = (SomeClassToSerilize) objectInput.readObject();
+
+            System.out.println("Deserialized");
+            System.out.println(sc);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         // I. Executor
