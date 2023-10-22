@@ -1,5 +1,6 @@
 package org.behzadfz;
 
+import java.io.*;
 import java.util.concurrent.*;
 
 import org.behzadfz.concurrency.CustomThreadFactory;
@@ -8,10 +9,48 @@ import org.behzadfz.concurrency.Invoker;
 import org.behzadfz.concurrency.Task;
 import org.behzadfz.concurrency.blockingqueue.NumbersConsumer;
 import org.behzadfz.concurrency.blockingqueue.NumbersProducer;
+import org.behzadfz.concurrency.blockingqueue.SomeClassToSerilize;
 
 public class Main {
     static Semaphore semaphore = new Semaphore(2);
     public static void main(String[] args) {
+
+        SomeClassToSerilize someClass = new SomeClassToSerilize(1, "the name");
+
+        String filename = "/Users/behzad_fz/Java/SpringBoot/threads/test-serialize.txt";
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+
+        // Write to file
+        try {
+            fileOutputStream = new FileOutputStream(filename);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(someClass);
+
+            objectOutputStream.close();
+            fileOutputStream.close();
+            System.out.println("Serilized!!");
+        } catch (IOException e) {
+            System.out.println("IO Error!!!!");
+        }
+
+        // Read from file
+        FileInputStream fileInput;
+        ObjectInputStream objectInput;
+
+        try {
+            fileInput = new FileInputStream(filename);
+            objectInput = new ObjectInputStream(fileInput);
+
+            SomeClassToSerilize sc = (SomeClassToSerilize) objectInput.readObject();
+
+            System.out.println("Deserialized");
+            System.out.println(sc);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // I. Executor
         Executor executor = new Invoker();
