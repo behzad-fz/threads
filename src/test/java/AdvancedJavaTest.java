@@ -1,5 +1,5 @@
 import org.behzadfz.advanced.Week;
-import org.behzadfz.concurrency.blockingqueue.App;
+import org.behzadfz.advanced.App;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

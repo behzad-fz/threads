@@ -1,9 +1,7 @@
-package org.behzadfz.concurrency.blockingqueue;
+package org.behzadfz.advanced;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-
-import org.behzadfz.advanced.CustomVersionAnnotation;
 
 public class CustomVersionValidator {
     public static void validate(String version) throws Exception {

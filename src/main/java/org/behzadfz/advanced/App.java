@@ -1,11 +1,6 @@
-package org.behzadfz.concurrency.blockingqueue;
+package org.behzadfz.advanced;
 
-import org.behzadfz.advanced.CustomVersionAnnotation;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class App {
