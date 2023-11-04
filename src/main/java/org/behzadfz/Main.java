@@ -3,6 +3,7 @@ package org.behzadfz;
 import java.io.*;
 import java.util.concurrent.*;
 
+import org.behzadfz.caching.CacheService;
 import org.behzadfz.concurrency.CustomThreadFactory;
 import org.behzadfz.concurrency.CyclicBarrierTask;
 import org.behzadfz.concurrency.Invoker;
@@ -13,7 +14,21 @@ import org.behzadfz.advanced.SomeClassToSerilize;
 
 public class Main {
     static Semaphore semaphore = new Semaphore(2);
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+        CacheService cacheService = new CacheService();
+
+        // test cache
+        Thread setValue = new Thread(() -> {
+            cacheService.put("foo", "bar");
+        });
+
+        Thread getValue = new Thread(() -> {
+            System.out.println(cacheService.get("foo"));
+        });
+
+        setValue.start();
+        getValue.start();
 
         SomeClassToSerilize someClass = new SomeClassToSerilize(1, "the name");
         someClass.setSecret(12);
