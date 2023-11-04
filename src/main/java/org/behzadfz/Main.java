@@ -22,8 +22,12 @@ public class Main {
             cacheService.put("foo", "bar");
         });
 
-        setValue.start();
+        Thread getValue = new Thread(() -> {
+            System.out.println(cacheService.get("foo"));
+        });
 
+        setValue.start();
+        getValue.start();
 
 //        SomeClassToSerilize someClass = new SomeClassToSerilize(1, "the name");
 //        someClass.setSecret(12);
