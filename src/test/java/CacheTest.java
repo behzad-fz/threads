@@ -1,6 +1,7 @@
 
 import org.behzadfz.caching.CacheService;
 import org.behzadfz.caching.CounterService;
+import org.behzadfz.caching.ThreadSafeCounterService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +34,7 @@ public class CacheTest {
 
         cacheService.forget("foo");
 
-        assertEquals(cacheService.get("foo"), null);
+        assertNull(cacheService.get("foo"));
     }
 
     @Test
@@ -60,5 +61,30 @@ public class CacheTest {
 
         // counter should be 10 in a single thread app but not guarantee in multi thread app
         assertNotEquals(counter.getCounter(), 10);
+    }
+
+    @Test
+    public void testThreadSafeCache() throws Exception {
+        ThreadSafeCounterService counter = new ThreadSafeCounterService();
+
+        Thread a = new Thread(() -> {
+            for (int i = 0;i < 5; i++) {
+                counter.increase();
+            }
+        });
+
+        Thread b = new Thread(() -> {
+            for (int i = 0;i < 5; i++) {
+                counter.increase();
+            }
+        });
+
+        a.start();
+        b.start();
+
+        a.join();
+        b.join();
+
+        assertEquals(counter.getCounter(), 10);
     }
 }
