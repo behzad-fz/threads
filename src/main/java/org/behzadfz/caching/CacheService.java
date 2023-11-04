@@ -12,4 +12,8 @@ public class CacheService {
                 .maximumSize(100)
                 .build();
     }
+
+    public void put(String key, Object value) {
+        cache.put(key, value);
+    }
 }
