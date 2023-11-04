@@ -1,5 +1,8 @@
 package org.behzadfz.caching;
 
+import javax.annotation.concurrent.ThreadSafe;
+
+@ThreadSafe
 public class ThreadSafeCounterService {
     private final CacheService cacheService;
 
