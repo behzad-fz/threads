@@ -20,4 +20,8 @@ public class CacheService {
     public Object get(String key) {
         return cache.getIfPresent(key);
     }
+
+    public void forget(String key) {
+        cache.invalidate(key);
+    }
 }

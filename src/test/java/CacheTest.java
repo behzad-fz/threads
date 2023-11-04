@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CacheTest {
 
     @Test
-    public void testItWorks() throws Exception {
+    public void testPutsAndGetsFromCache() throws Exception {
         CacheService cacheService = new CacheService();
 
         Thread setValue = new Thread(() -> {
@@ -22,5 +22,16 @@ public class CacheTest {
         setValue.start();
         setValue.join();
         getValue.start();
+    }
+
+    @Test
+    public void testRemovesFromCache() throws Exception {
+        CacheService cacheService = new CacheService();
+        cacheService.put("foo", "bar");
+        assertEquals(cacheService.get("foo"), "bar");
+
+        cacheService.forget("foo");
+
+        assertEquals(cacheService.get("foo"), null);
     }
 }
