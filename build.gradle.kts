@@ -14,6 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("com.google.guava:guava:30.1.1-jre")
     implementation("com.github.ben-manes.caffeine:caffeine:2.8.8")
+    implementation("mysql:mysql-connector-java:8.0.28")
 }
 
 tasks.test {
